@@ -1,0 +1,83 @@
+<h1>Angular OnFire 🔥</h1>
+
+<!-- <p><b>FUNCIONANDO ATÉ AQUI! </b> | root works!</p> -->
+
+<div *ngIf="!auth.user">
+  <form>
+    <fieldset style="border-radius:10px;">
+      <legend>Login</legend>
+      <div style="color:blue;"><b>Email</b></div>
+      <input
+        style="border-radius:6px; padding:4px;"
+        type="text"
+        name="email"
+        [(ngModel)]="email"
+      />
+      <div style="color:blue;"><b>Senha</b></div>
+      <input
+        style="border-radius:6px; padding:4px;"
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+      />
+      <hr />
+      <button
+        style="border-radius:6px; padding:4px; background-color:blue; color:white; font-weight:bold; cursor:pointer;"
+        (click)="auth.emailSignin(this.email, this.password)"
+      >
+        Login with e-mail
+      </button>
+      |
+      <button
+        style="border-radius:6px; padding:4px; background-color:blue; color:white; font-weight:bold; cursor:pointer;"
+        (click)="auth.googleSignin()"
+      >
+        Login with Google
+      </button>
+    </fieldset>
+  </form>
+  <br />
+  <footer style="text-align: center; font-weight:bold;">
+    Desenvolvido por André Moutinho
+  </footer>
+</div>
+
+<div *ngIf="auth.error" style="color: red">
+  {{ auth.error }}
+</div>
+<div *ngIf="auth.user">
+  Conectado como: <b>{{ auth.user.email }}</b> |
+  <button
+    style="border-radius:6px; padding:4px; background-color:blue; color:white; font-weight:bold; cursor:pointer;"
+    (click)="auth.signOut()"
+  >
+    Sair
+  </button>
+  <hr />
+
+  <h2>Firebase list</h2>
+  <hr />
+  <div>Nome:</div>
+  <div><input [(ngModel)]="formNewName" /></div>
+  <div>Idade:</div>
+  <div><input type="number" [(ngModel)]="formNewAge" /></div>
+  <br />
+  <button (click)="addItem()">Adicionar</button>
+  <hr />
+  <table border="1">
+    <tr>
+      <th>Nome</th>
+      <th>Idade</th>
+      <th>E-mail</th>
+      <th>Comando</th>
+    </tr>
+    <tr *ngFor="let item of list | async">
+      <td [title]="['chave: ' + item.key]">{{ item.name }}</td>
+      <td>{{ item.age }}</td>
+      <td>{{ item.email }}</td>
+      <td>
+        <button (click)="deleteItem(item.key)">Remove</button>
+      </td>
+    </tr>
+  </table>
+</div>
